@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const ordersDal = require('../services/orders.dal')
+const petsDal = require('../services/pets.dal')
 
 // https://localhost:3000/pets/
 router.get('/', async (req, res) => {
