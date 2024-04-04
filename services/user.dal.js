@@ -10,7 +10,7 @@ var getUsers = function() {
         if(DEBUG) console.log(err);
         reject(err);
       } else {
-        if(DEBUG) console.log("inside the login.dal.getLogin() success");
+        if(DEBUG) console.log("inside the user.dal.getUser() success");
         if(DEBUG) console.log(result.rows);
         resolve(result.rows);
       }
@@ -18,9 +18,9 @@ var getUsers = function() {
   });
 };
 
-//functions to get one particular login from the database
-var getUsersById = function(user_id) {
-  if(DEBUG) console.log("login.dal.getLoginById()");
+//functions to get one particular user from the database
+var getUserById = function(user_id) {
+  if(DEBUG) console.log("user.dal.getUserById()");
   return new Promise(function(resolve, reject) {
     const sql = "SELECT * from users WHERE user_id = $1";
     dal.query(sql, [user_id], (err, result) => {
@@ -36,11 +36,11 @@ var getUsersById = function(user_id) {
 
 //function to add a new entry into the database
 var addUser = function(user_id, username, owner_id, ) {
-  if(DEBUG) console.log("login.dal.addLogin()");
+  if(DEBUG) console.log("user.dal.addUser()");
   return new Promise(function(resolve, reject) {
-    const sql = "INSERT INTO public.logins(login_id, user_id, date) \
+    const sql = "INSERT INTO public.users(user_id, user_id, date) \
         VALUES ($1, $2, $3, $4);";
-    dal.query(sql, [login_id, user_id, date], (err, result) => {
+    dal.query(sql, [user_id, user_id, date], (err, result) => {
       if (err) {
           if(DEBUG) console.log(err);
           reject(err);
@@ -51,12 +51,12 @@ var addUser = function(user_id, username, owner_id, ) {
   });
 };
 
-//function to replace or 'put' an login in the database
-var putLogin = function(login_id, user_id, date) {
-  if(DEBUG) console.log("login.dal.putLogin()");
+//function to replace or 'put' an user in the database
+var putUser = function(user_id, user_id, date) {
+  if(DEBUG) console.log("user.dal.putUser()");
   return new Promise(function(resolve, reject) {
-    const sql = "UPDATE public.logins SET login_id = $1, user_id = $2, date = $3";
-    dal.query(sql, [login_id, user_id, date], (err, result) => {
+    const sql = "UPDATE public.users SET user_id = $1, user_id = $2, date = $3";
+    dal.query(sql, [user_id, user_id, date], (err, result) => {
       if (err) {
           reject(err);
           console.log("reject")
@@ -68,12 +68,12 @@ var putLogin = function(login_id, user_id, date) {
   });
 };
 
-//function to edit of 'patch' an logins in the database
-var patchLogin = function(login_id, user_id, date) {
-  if(DEBUG) console.log("login.dal.patchLogin()");
+//function to edit of 'patch' an users in the database
+var patchUser = function(user_id, user_id, date) {
+  if(DEBUG) console.log("user.dal.patchUser()");
   return new Promise(function(resolve, reject) {
-    const sql = "UPDATE public.logins SET login_id = $1, user_id = $2, date = $3";
-    dal.query(sql, [login_id, user_id, date], (err, result) => {
+    const sql = "UPDATE public.users SET user_id = $1, user_id = $2, date = $3";
+    dal.query(sql, [user_id, user_id, date], (err, result) => {
       if (err) {
           reject(err);
         } else {
@@ -84,12 +84,12 @@ var patchLogin = function(login_id, user_id, date) {
   });
 };
 
-//function to delete a login in the database
-var deleteLogin = function(login_id) {
-  if(DEBUG) console.log("login.dal.deleteLogin()");
+//function to delete a user in the database
+var deleteUser = function(user_id) {
+  if(DEBUG) console.log("user.dal.deleteUser()");
   return new Promise(function(resolve, reject) {
-    const sql = "DELETE FROM public.logins WHERE login_id = $1;";
-    dal.query(sql, [login_id], (err, result) => {
+    const sql = "DELETE FROM public.users WHERE user_id = $1;";
+    dal.query(sql, [user_id], (err, result) => {
       if (err) {
           reject(err);
         } else {
@@ -101,10 +101,10 @@ var deleteLogin = function(login_id) {
 
 //exports of all functions to be used in the application
 module.exports = {
-    getLogin,
-    getLoginById,
-    addLogin,
-    putLogin,
-    patchLogin,
-    deleteLogin
+    getUsers,
+    getUserById,
+    addUser,
+    putUser,
+    patchUser,
+    deleteUser
 }
