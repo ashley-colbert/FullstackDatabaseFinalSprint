@@ -1,3 +1,4 @@
+CREATE SEQUENCE public.pet_type_type_id_seq;
 CREATE TABLE IF NOT EXISTS public.pet_type
 (
     type_id integer NOT NULL DEFAULT nextval('pet_type_type_id_seq'::regclass),
@@ -7,5 +8,3 @@ CREATE TABLE IF NOT EXISTS public.pet_type
     CONSTRAINT pet_type_pkey PRIMARY KEY (type_id)
 )
 
-ALTER TABLE IF EXISTS public.pet_type
-    OWNER to postgres;

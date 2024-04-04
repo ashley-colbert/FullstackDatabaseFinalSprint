@@ -15,6 +15,6 @@ ALTER TABLE pets
 ADD CONSTRAINT FKey1
 FOREIGN KEY (type_id) REFERENCES pet_type(type_id);
 
-ALTER TABLE pets;
+ALTER TABLE pets
 ADD CONSTRAINT FKey2
 FOREIGN KEY (owner_id) REFERENCES owner(owner_id);

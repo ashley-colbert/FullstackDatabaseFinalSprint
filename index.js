@@ -1,3 +1,4 @@
+
 const express = require('express');
 const methodOverride = require('method-override');
 const app = express();
@@ -24,10 +25,16 @@ app.use('/petType', petTypeRouter);
 const ownerRouter = require('./routes/owner')
 app.use('/owner', ownerRouter);
 
+const userRouter = require('./routes/users')
+app.use('/users', userRouter);
+
+const loginRouter = require('./routes/login')
+app.use('/login', loginRouter);
+
 
 // sets all API routers to be used in the restfulAPI
-const apiRouter = require('./routes/api')
-app.use('/api', apiRouter);
+// const apiRouter = require('./routes/api')
+// app.use('/api', apiRouter);
 
 app.use((req, res) => {
     res.status(404).render('404');
