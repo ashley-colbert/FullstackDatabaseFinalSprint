@@ -1,0 +1,34 @@
+<html lang="en">
+    <body>
+        
+            <form action="/pets" method="POST">
+                <b>Users: </b><br>
+            <!-- <% if (theOwners.length > 0) { %>
+                <% theOwners.forEach(owner => { %>
+                    <b><%= owner.name %> <%= owner.age %> <%= owner.email %></b>
+                    <a href="/pet/<%=pet.pet_id%>/edit?pet_name=<%=pet.pet_name%>">edit</a>
+                    <a href="/pet/<%=pet.pet_id%>/delete?pet_name=<%=pet.pet_name%>">delete</a>
+                    <a href="/pet/<%=pet.pet_id%>/replace?pet_name=<%=pet.pet_name%>">replace</a><br>
+                    <% }) %>
+            <% } %> -->
+            <br><label>Add Pet:</label><br>
+            <label>Name:
+                <input type="text" id="pet_name" name="pet_name" value="<%= locals.pet_name %>" required>
+            </label>
+            <label>Age:
+                <input type="text" id="age" name="age" value="<%= locals.age %>" required>
+            </label>
+            <label>Pet Type:
+              <select id="type_id" name="type_id" value="<%= locals.type_id %>" required>
+                <option value="1">Cat</option>
+                <option value="2">Dog</option>
+          </label>
+          <input type="hidden" id="owner_id" name="owner_id" value="<%= req.query.owner_id %>">
+
+
+            <br>
+            <button>POST</button>
+        </form>
+        
+    </body>
+</html>

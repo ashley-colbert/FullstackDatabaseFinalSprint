@@ -1,27 +1,20 @@
 <html lang="en">
 
     <body>
-        <div class="logins content">
+        <div class=>
             <form action="/login" method="POST">
-                <b>Login: </b></br>
-            <!-- <% if (theLogins.length > 0) { %>
-                <% theLogins.forEach(login => { %>
-                    <b><%= login.username %></b>
-                    <a href="/logins/<%=login.id%>/edit?username=<%=login.username%>">edit</a>
-                    <a href="/logins/<%=login.id%>/delete?username=<%=login.username%>">delete</a></br> 
-                    <% }) %>
-            <% } %>
-            </br><label>Add Login:</label></br> -->
+                Login: <br>
             <label>Username:
-                <input type="text" id="userame" name="username" value="<%= locals.userame %>" required>
+                <input type="text" id="userame" name="username" value="<%= locals.username %>" required>
             </label>
+            <input hidden type="date" id="date" name="date" value="<%= currentDate %>" required>
             <label>Password:
                 <input type="password" id="password" name="password" value="<%= locals.password %>" required>
             </label>
-            </br>
+
+            <br>
             <button>Login</button>
         </form>
         </div>
     </body>
-    <%- include('./partials/foot.ejs') %>
 </html>

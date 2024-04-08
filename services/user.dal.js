@@ -1,4 +1,6 @@
 const dal = require("./pgDatabase");
+const bcrypt = require('bcrypt');
+
 
 //function to get all users from the database
 var getUsers = function() {
@@ -19,11 +21,11 @@ var getUsers = function() {
 };
 
 //functions to get one particular user from the database
-var getUserById = function(user_id) {
-  if(DEBUG) console.log("user.dal.getUserById()");
+var getUserByUsername = function(username) {
+  if(DEBUG) console.log("user.dal.getUserByUsername()");
   return new Promise(function(resolve, reject) {
-    const sql = "SELECT * from users WHERE user_id = $1";
-    dal.query(sql, [user_id], (err, result) => {
+    const sql = "SELECT username, password from users WHERE username = $1";
+    dal.query(sql, [username], (err, result) => {
       if (err) {
         if(DEBUG) console.log(err);
         reject(err);
@@ -35,12 +37,11 @@ var getUserById = function(user_id) {
 };
 
 //function to add a new entry into the database
-var addUser = function(user_id, username, owner_id, ) {
+var addUser = function(username, hashedPassword, email, ) {
   if(DEBUG) console.log("user.dal.addUser()");
   return new Promise(function(resolve, reject) {
-    const sql = "INSERT INTO public.users(user_id, user_id, date) \
-        VALUES ($1, $2, $3, $4);";
-    dal.query(sql, [user_id, user_id, date], (err, result) => {
+    const sql = "INSERT INTO public.users(username, password, email) VALUES ($1, $2, $3);";
+    dal.query(sql, [username, hashedPassword, email], (err, result) => {
       if (err) {
           if(DEBUG) console.log(err);
           reject(err);
@@ -52,11 +53,11 @@ var addUser = function(user_id, username, owner_id, ) {
 };
 
 //function to replace or 'put' an user in the database
-var putUser = function(user_id, user_id, date) {
+var putUser = function(username, password, email) {
   if(DEBUG) console.log("user.dal.putUser()");
   return new Promise(function(resolve, reject) {
     const sql = "UPDATE public.users SET user_id = $1, user_id = $2, date = $3";
-    dal.query(sql, [user_id, user_id, date], (err, result) => {
+    dal.query(sql, [username, password, email], (err, result) => {
       if (err) {
           reject(err);
           console.log("reject")
@@ -69,11 +70,11 @@ var putUser = function(user_id, user_id, date) {
 };
 
 //function to edit of 'patch' an users in the database
-var patchUser = function(user_id, user_id, date) {
+var patchUser = function(username, password, email) {
   if(DEBUG) console.log("user.dal.patchUser()");
   return new Promise(function(resolve, reject) {
-    const sql = "UPDATE public.users SET user_id = $1, user_id = $2, date = $3";
-    dal.query(sql, [user_id, user_id, date], (err, result) => {
+    const sql = "UPDATE public.users SET username = $1, password = $2, email = $3";
+    dal.query(sql, [username, password, email], (err, result) => {
       if (err) {
           reject(err);
         } else {
@@ -85,11 +86,11 @@ var patchUser = function(user_id, user_id, date) {
 };
 
 //function to delete a user in the database
-var deleteUser = function(user_id) {
+var deleteUser = function(username) {
   if(DEBUG) console.log("user.dal.deleteUser()");
   return new Promise(function(resolve, reject) {
-    const sql = "DELETE FROM public.users WHERE user_id = $1;";
-    dal.query(sql, [user_id], (err, result) => {
+    const sql = "DELETE FROM public.users WHERE username = $1;";
+    dal.query(sql, [username], (err, result) => {
       if (err) {
           reject(err);
         } else {
@@ -102,7 +103,7 @@ var deleteUser = function(user_id) {
 //exports of all functions to be used in the application
 module.exports = {
     getUsers,
-    getUserById,
+    getUserByUsername,
     addUser,
     putUser,
     patchUser,

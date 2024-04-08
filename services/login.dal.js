@@ -19,11 +19,11 @@ var getLogin = function() {
 };
 
 //functions to get one particular login from the database
-var getLoginById = function(login_id) {
-  if(DEBUG) console.log("login.dal.getLoginById()");
+var getLoginByUsername = function(login_id) {
+  if(DEBUG) console.log("login.dal.getLoginByUsername()");
   return new Promise(function(resolve, reject) {
-    const sql = "SELECT * from logins WHERE login_id = $1";
-    dal.query(sql, [login_id], (err, result) => {
+    const sql = "SELECT * from logins WHERE username = $1";
+    dal.query(sql, [username], (err, result) => {
       if (err) {
         if(DEBUG) console.log(err);
         reject(err);
@@ -35,12 +35,12 @@ var getLoginById = function(login_id) {
 };
 
 //function to add a new entry into the database
-var addLogin = function(login_id, user_id, date) {
+var addLogin = function(username, currentDate) {
   if(DEBUG) console.log("login.dal.addLogin()");
   return new Promise(function(resolve, reject) {
-    const sql = "INSERT INTO public.logins(login_id, user_id, date) \
-        VALUES ($1, $2, $3, $4);";
-    dal.query(sql, [login_id, user_id, date], (err, result) => {
+    const sql = "INSERT INTO public.logins(username, date) \
+        VALUES ($1, $2);";
+    dal.query(sql, [username, currentDate], (err, result) => {
       if (err) {
           if(DEBUG) console.log(err);
           reject(err);
@@ -52,11 +52,11 @@ var addLogin = function(login_id, user_id, date) {
 };
 
 //function to replace or 'put' an login in the database
-var putLogin = function(login_id, user_id, date) {
+var putLogin = function(username, date) {
   if(DEBUG) console.log("login.dal.putLogin()");
   return new Promise(function(resolve, reject) {
-    const sql = "UPDATE public.logins SET login_id = $1, user_id = $2, date = $3";
-    dal.query(sql, [login_id, user_id, date], (err, result) => {
+    const sql = "UPDATE public.logins SET username = $1, date = $3";
+    dal.query(sql, [username, date], (err, result) => {
       if (err) {
           reject(err);
           console.log("reject")
@@ -69,11 +69,11 @@ var putLogin = function(login_id, user_id, date) {
 };
 
 //function to edit of 'patch' an logins in the database
-var patchLogin = function(login_id, user_id, date) {
+var patchLogin = function(username, date) {
   if(DEBUG) console.log("login.dal.patchLogin()");
   return new Promise(function(resolve, reject) {
-    const sql = "UPDATE public.logins SET login_id = $1, user_id = $2, date = $3";
-    dal.query(sql, [login_id, user_id, date], (err, result) => {
+    const sql = "UPDATE public.logins SET username = $1, date = $2";
+    dal.query(sql, [username, date], (err, result) => {
       if (err) {
           reject(err);
         } else {
@@ -85,11 +85,11 @@ var patchLogin = function(login_id, user_id, date) {
 };
 
 //function to delete a login in the database
-var deleteLogin = function(login_id) {
+var deleteLogin = function(username) {
   if(DEBUG) console.log("login.dal.deleteLogin()");
   return new Promise(function(resolve, reject) {
-    const sql = "DELETE FROM public.logins WHERE login_id = $1;";
-    dal.query(sql, [login_id], (err, result) => {
+    const sql = "DELETE FROM public.logins WHERE username = $1;";
+    dal.query(sql, [username], (err, result) => {
       if (err) {
           reject(err);
         } else {
@@ -102,7 +102,7 @@ var deleteLogin = function(login_id) {
 //exports of all functions to be used in the application
 module.exports = {
     getLogin,
-    getLoginById,
+    getLoginByUsername,
     addLogin,
     putLogin,
     patchLogin,

@@ -2,11 +2,18 @@ const express = require('express');
 const router = express.Router();
 const loginsDal = require('../services/login.dal')
 
+
+function getCurrentDate() {
+  return new Date().toISOString().split('T')[0];
+}
+
+
 router.get('/', async (req, res) => {
     try {
-        let theLogins = await loginsDal.getLogins();
+        let theLogins = await loginsDal.getLogin();
         if(DEBUG) console.table(theLogins);
-        res.render('logins', {theLogins});
+        const currentDate = getCurrentDate();
+        res.render('login', {theLogins, currentDate});
     } catch {
         res.render('503');
     }
@@ -16,8 +23,9 @@ router.get('/:id', async (req, res) => {
 ;
   try {
       let aLogin = await loginsDal.getLoginByLoginId(req.params.id);
+      const currentDate = getCurrentDate();
       if (aLogin.length === 0)
-          res.render('norecord')
+          res.render('norecord', { currentDate })
       else
           res.render('login', {aLogin});
   } catch {
@@ -35,27 +43,73 @@ router.get('/:id/edit', async (req, res) => {
   res.render('loginPatch.ejs', {username: req.query.username, theId: req.params.user_id});
 });
 
-router.post('/', async (req, res) => {
-  if(DEBUG) console.log("logins.POST");
+// router.post('/', async (req, res) => {
+//   if(DEBUG) console.log("login.POST");
+//   try {
+//       await loginsDal.addLogin(req.body.username, req.body.date);
+//       res.redirect('/login/');
+//   } catch {
+//       res.render('503');
+//   }
+// });
+
+// router.post('/login', async (req, res) => {
+//   try {
+//       const { username, password } = req.body;
+//       const user = await usersDal.getUserByUsername(username);
+
+//       if (user) {
+//           const match = await bcrypt.compare(password, user.hashedPassword);
+//           if (match) {
+
+//               res.redirect('/index');
+//           } else {
+//               res.render('login', { message: 'Invalid username or password.' });
+//           }
+//       } else {
+//           res.render('login', { message: 'Invalid username or password.' });
+//       }
+//   } catch (error) {
+//       console.error(error);
+//       res.render('503');
+//   }
+// });
+
+router.post('/login', async (req, res) => {
   try {
-      await loginsDal.addLogin(req.body.username, req.body.password);
-      res.redirect('/logins/');
-  } catch {
+      const { username, password } = req.body;
+      const user = await usersDal.getUserByUsername(username);
+
+      if (user) {
+
+          const match = await bcrypt.compare(password, user.hashedPassword);
+          if (match) {
+              const currentDate = new Date().toISOString().split('T')[0];
+              await loginsDal.addLogin(username, currentDate);
+              res.redirect('/login/');
+          } else {
+              res.render('login', 'Invalid username or password.' );
+          }
+      } else {
+          res.render('login',  'Invalid username or password.' );
+      }
+  } catch (error) {
+      console.error(error);
       res.render('503');
-  } 
+  }
 });
 
 router.patch('/:id', async (req, res) => {
-  if(DEBUG) console.log('logins.PATCH: ' + req.params.user_id);
+  if(DEBUG) console.log('login.PATCH: ' + req.params.user_id);
   try {
       await loginsDal.patchLogin(req.params.user_id, req.body.username, req.body.password);
-      res.redirect('/logins/');
+      res.redirect('/login/');
   } catch {
       res.render('503');
   }
 });
 router.delete('/:id', async (req, res) => {
-  if(DEBUG) console.log('logins.DELETE: ' + req.params.user_id);
+  if(DEBUG) console.log('login.DELETE: ' + req.params.user_id);
   try {
       await loginsDal.deleteLogin(req.params.user_id)
   } catch {

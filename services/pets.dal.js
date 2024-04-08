@@ -38,17 +38,17 @@ var getPetById = function(pet_id) {
 
 
 //function to add a new entry into the database
-var addPet = function(pet_id, pet_name, age, type_id, owner_id) {
+var addPet = function(pet_name, age, type_id, owner_id) {
   if(DEBUG) console.log("pets.dal.addPet()");
   return new Promise(function(resolve, reject) {
-    const sql = "INSERT INTO public.pet(pet_id, pet_name, age, type_id, owner_id) \
-        VALUES ($1, $2, $3, $4, $5);";
-    dal.query(sql, [pet_id, pet_name, age, type_id, owner_id], (err, result) => {
+    const sql = "INSERT INTO public.pets(pet_name, age, type_id, owner_id) VALUES ($1, $2, $3, $4);";
+    dal.query(sql, [pet_name, age, type_id, owner_id], (err, result) => {
       if (err) {
           if(DEBUG) console.log(err);
           reject(err);
         } else {
           resolve(result.rows);
+          console.log(`Added ${pet_name}, ${age}, ${type_id}, ${owner_id} to database`)
         }
     });
   });

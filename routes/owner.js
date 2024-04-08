@@ -5,9 +5,9 @@ const ownerDal = require('../services/owner.dal')
 // https://localhost:3000/owners/
 router.get('/', async (req, res) => {
     try {
-        let thePets = await petsDal.getOwners();
+        let theOwners = await ownerDal.getOwner();
         if(DEBUG) console.table(theOwners);
-        res.render('owners', {theOwners});
+        res.render('owner', {theOwners});
     } catch {
         res.render('503');
     }
@@ -19,7 +19,7 @@ router.get('/:id', async (req, res) => {
         const anOwner = await ownersDal.getOwnerById(req.params.owner_id);
         if(DEBUG) console.log(`owners.router.get/:id ${anOwner}`);
         if (anOwner)
-            res.render('pets', {anOwner});
+            res.render('owner', {anOwner});
         else
             res.render('norecord');
     } catch {
@@ -30,7 +30,7 @@ router.get('/:id', async (req, res) => {
 // this router will replace an entry in the database that matches the owner_id
 router.get('/:id/replace', async (req, res) => {
     if(DEBUG) console.log('owner.Replace : ' + req.params.owner_id);
-    res.render('petsPut.ejs', { owner_id: req.params.owner_id, name: req.query.name, age: req.query.age, email: req.query.email});
+    res.render('ownerPut.ejs', { owner_id: req.params.owner_id, name: req.query.name, age: req.query.age, email: req.query.email});
 });
 
 //this will edit an entry in the database using the owner_id
@@ -49,8 +49,8 @@ router.get('/:id/delete', async (req, res) => {
 router.post('/', async (req, res) => {
     if(DEBUG) console.log("owner.POST");
     try {
-        await ownerDal.addOwner(req.body.owner_id, req.query.name, req.query.age, req.query.email);
-        res.redirect('/owners/');
+        await ownerDal.addOwner(req.body.name, req.body.age, req.body.email);
+        res.redirect('/pets/');
     } catch {
         res.render('503');
     }
@@ -62,7 +62,7 @@ router.put('/:id', async (req, res) => {
     if(DEBUG) console.log('owners.PUT: ' + req.params.owner_id);
     try {
         await ownersDal.putOwner(req.body.owner_id, req.query.name, req.query.age, req.query.email);
-        res.redirect('/pets/');
+        res.redirect('/owner/');
     } catch {
         res.render('503');
     }
@@ -72,7 +72,7 @@ router.patch('/:id', async (req, res) => {
     if(DEBUG) console.log('owner.PATCH: ' + req.params.owner_id);
     try {
         await ownerDal.patchOwner(req.body.owner_id, req.query.name, req.query.age, req.query.email);
-        res.redirect('/owners/');
+        res.redirect('/owner/');
     } catch {
         res.render('503');
     }
