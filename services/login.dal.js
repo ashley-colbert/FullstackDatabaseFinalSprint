@@ -19,7 +19,7 @@ var getLogin = function() {
 };
 
 //functions to get one particular login from the database
-var getLoginByUsername = function(login_id) {
+var getLoginByUsername = function(username) {
   if(DEBUG) console.log("login.dal.getLoginByUsername()");
   return new Promise(function(resolve, reject) {
     const sql = "SELECT * from logins WHERE username = $1";
@@ -35,12 +35,12 @@ var getLoginByUsername = function(login_id) {
 };
 
 //function to add a new entry into the database
-var addLogin = function(username, currentDate) {
+var addLogin = function(username, date) {
   if(DEBUG) console.log("login.dal.addLogin()");
   return new Promise(function(resolve, reject) {
     const sql = "INSERT INTO public.logins(username, date) \
         VALUES ($1, $2);";
-    dal.query(sql, [username, currentDate], (err, result) => {
+    dal.query(sql, [username, date], (err, result) => {
       if (err) {
           if(DEBUG) console.log(err);
           reject(err);

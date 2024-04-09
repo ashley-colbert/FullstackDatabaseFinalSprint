@@ -1,6 +1,8 @@
 const express = require('express');
 const router = express.Router();
 const loginsDal = require('../services/login.dal')
+const usersDal = require('../services/user.dal')
+const bcrypt = require('bcrypt');
 
 
 function getCurrentDate() {
@@ -75,23 +77,28 @@ router.get('/:id/edit', async (req, res) => {
 //   }
 // });
 
-router.post('/login', async (req, res) => {
+router.post('/', async (req, res) => {
   try {
       const { username, password } = req.body;
       const user = await usersDal.getUserByUsername(username);
 
       if (user) {
-
-          const match = await bcrypt.compare(password, user.hashedPassword);
+          console.log('Plaintext password:', password);
+          console.log('User object:', user);
+          console.log('Hashed password from user object:', user ? user.password : 'User object is undefined.');
+          const match = await bcrypt.compare(password, user[0].password);
           if (match) {
               const currentDate = new Date().toISOString().split('T')[0];
               await loginsDal.addLogin(username, currentDate);
-              res.redirect('/login/');
+              console.log("pets")
+              res.redirect('/pets');
           } else {
-              res.render('login', 'Invalid username or password.' );
+              console.log("match")
+              res.render('login', {message: 'Invalid username or password.'} );
           }
       } else {
-          res.render('login',  'Invalid username or password.' );
+          console.log("no match")
+          res.render('login', {message: 'Invalid username or password.'} );
       }
   } catch (error) {
       console.error(error);
