@@ -1,0 +1,29 @@
+<html lang="en">
+    <body>
+        
+            <form action="/users" method="POST">
+                <b>Users: </b><br>
+            <% if (theUsers.length > 0) { %>
+                <% theUsers.forEach(user => { %>
+                    <b><%= user.username %>, <%= user.email %></b>
+                    <a href="/users/<%=user.username%>/edit?username=<%=user.username%>&email=<%=user.email%>">edit</a>
+                    <a href="/users/<%=user.username%>/delete?username=<%=user.username%>&email=<%=user.email%>">delete</a>
+                    <a href="/users/<%=user.username%>/replace?username=<%=user.username%>&email=<%=user.email%>">replace</a><br> 
+                    <% }) %>
+            <% } %>
+            <br><label>Add User:</label><br>
+            <label>Username:
+                <input type="text" id="username" name="username" value="<%= locals.username %>" required>
+            </label>
+            <label>Password:
+                <input type="text" id="password" name="password" value="<%= locals.password %>" required>
+            </label>
+            <label>Email:
+              <input type="text" id="email" name="email" value="<%= locals.email %>" required>
+          </label>
+            <br>
+            <button>POST</button>
+        </form>
+        
+    </body>
+</html>

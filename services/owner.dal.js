@@ -38,12 +38,12 @@ var getOwnerById = function(owner_id) {
 
 
 //function to add a new entry into the database
-var addOwner = function(owner_id, name, age, email) {
+var addOwner = function(name, age, email) {
   if(DEBUG) console.log("owner.dal.addOwner()");
   return new Promise(function(resolve, reject) {
-    const sql = "INSERT INTO public.owner(owner_id, name, age, email) \
-        VALUES ($1, $2, $3, $4);";
-    dal.query(sql, [owner_id, name, age, email], (err, result) => {
+    const sql = "INSERT INTO public.owner(name, age, email) \
+        VALUES ($1, $2, $3)";
+    dal.query(sql, [name, age, email], (err, result) => {
       if (err) {
           if(DEBUG) console.log(err);
           reject(err);

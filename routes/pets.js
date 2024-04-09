@@ -49,7 +49,7 @@ router.get('/:id/delete', async (req, res) => {
 router.post('/', async (req, res) => {
     if(DEBUG) console.log("pets.POST");
     try {
-        await petsDal.addPet(req.body.pet_id, req.query.pet_name, req.query.age, req.query.type_id, req.query.owner_id);
+        await petsDal.addPet(req.body.pet_name, req.body.age, req.body.type_id, req.body.owner_id);
         res.redirect('/pets/');
     } catch {
         res.render('503');

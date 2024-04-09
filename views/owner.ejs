@@ -1,0 +1,29 @@
+<html lang="en">
+    <body>
+        
+            <form action="/owner" method="POST">
+                <b>Owners: </b><br>
+            <% if (theOwners.length > 0) { %>
+                <% theOwners.forEach(owner => { %>
+                    <b><%= owner.name %> <%= owner.age %> <%= owner.email %></b>
+                    <a href="/owner/<%=owner.owner_id%>/edit?name=<%=owner.name%>">edit</a>
+                    <a href="/owner/<%=owner.owner_id%>/delete?name=<%=owner.name%>">delete</a>
+                    <a href="/owner/<%=owner.owner_id%>/replace?name=<%=owner.name%>">replace</a><br>
+                    <% }) %>
+            <% } %>
+            <br><label>Add Owner:</label><br>
+            <label>Name:
+                <input type="text" id="name" name="name" value="<%= locals.name %>" required>
+            </label>
+            <label>Age:
+                <input type="text" id="age" name="age" value="<%= locals.age %>" required>
+            </label>
+            <label>Email:
+              <input type="text" id="email" name="email" value="<%= locals.email %>" required>
+          </label>
+            <br>
+            <button>POST</button>
+        </form>
+        
+    </body>
+</html>

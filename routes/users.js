@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
-const usersDal = require('../services/user.dal')
+const usersDal = require('../services/user.dal');
+const bcrypt = require('bcrypt');
 
 // https://localhost:3000/users/
 router.get('/', async (req, res) => {
@@ -49,8 +50,12 @@ router.get('/:id/delete', async (req, res) => {
 router.post('/', async (req, res) => {
     if(DEBUG) console.log("users.POST");
     try {
-        await usersDal.addUser(req.query.user_name, req.query.password, req.query.email );
-        res.redirect('/users/');
+        const password = req.body.password;
+        const saltRounds = 10;
+        const hashedPassword =  await bcrypt.hash(password, saltRounds);
+
+        await usersDal.addUser(req.body.username, hashedPassword, req.body.email );
+        res.redirect('/login/');
     } catch {
         res.render('503');
     }
@@ -59,24 +64,35 @@ router.post('/', async (req, res) => {
 // PUT, PATCH, and DELETE are part of HTTP, not a part of HTML
 
 router.put('/:id', async (req, res) => {
-    if(DEBUG) console.log('users.PUT: ' + req.params.user_id);
-    try {
-        await usersDal.putUser(req.params.user_id, req.query.user_name, req.query.password);
-        res.redirect('/users/');
-    } catch {
-        res.render('503');
-    }
+  if(DEBUG) console.log('users.PUT: ' + req.params.id);
+  try {
+      const password = req.body.password;
+      const saltRounds = 10;
+      const hashedPassword = await bcrypt.hash(password, saltRounds);
+
+      await usersDal.putUser(req.params.id, req.body.user_name, hashedPassword);
+      res.redirect('/users/');
+  } catch {
+      res.render('503');
+  }
 });
 
 router.patch('/:id', async (req, res) => {
-    if(DEBUG) console.log('users.PATCH: ' + req.params.user_id);
-    try {
-        await usersDal.patchUsers(req.params.user_id, req.query.user_name, req.query.password);
-        res.redirect('/users/');
-    } catch {
-        res.render('503');
-    }
+  if(DEBUG) console.log('users.PATCH: ' + req.params.id);
+  try {
+      let hashedPassword = null;
+      if (req.body.password) {
+          const saltRounds = 10;
+          hashedPassword = await bcrypt.hash(req.body.password, saltRounds);
+      }
+
+      await usersDal.patchUser(req.params.id, req.body.user_name, hashedPassword);
+      res.redirect('/users/');
+  } catch {
+      res.render('503');
+  }
 });
+
 
 router.delete('/:id', async (req, res) => {
     if(DEBUG) console.log('users.DELETE: ' + req.params.user_id);
