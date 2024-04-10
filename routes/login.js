@@ -83,15 +83,12 @@ router.post('/', async (req, res) => {
       const user = await usersDal.getUserByUsername(username);
 
       if (user) {
-          console.log('Plaintext password:', password);
-          console.log('User object:', user);
-          console.log('Hashed password from user object:', user ? user.password : 'User object is undefined.');
           const match = await bcrypt.compare(password, user[0].password);
           if (match) {
               const currentDate = new Date().toISOString().split('T')[0];
               await loginsDal.addLogin(username, currentDate);
               console.log("pets")
-              res.redirect('/pets');
+              res.redirect('/home');
           } else {
               console.log("match")
               res.render('login', {message: 'Invalid username or password.'} );

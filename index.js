@@ -1,8 +1,8 @@
-
 const express = require('express');
 const methodOverride = require('method-override');
 const app = express();
 const PORT = 3000;
+const session = require('express-session');
 
 //this ensure all the npm packages added above can be used throughout the application.
 global.DEBUG = true;
@@ -14,6 +14,14 @@ app.use(methodOverride('_method'));
 app.get('/', (req, res) => {
     res.render('index.ejs', { });
 });
+
+//to use sessions throughout the app
+app.use(session({
+  secret: 'myKey123',
+  resave: false,
+  saveUninitialized: true,
+  cookie: { secure: true }
+}));
 
 //sets the UI routers to be used in the web browser
 const petsRouter = require('./routes/pets')
