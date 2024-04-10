@@ -15,7 +15,9 @@
           <% if (results && results.length > 0) { %>
             <ul>
               <% results.forEach(function(result) { %>
-                <li><%= result.name %></li>
+                <li><%= result.fact %></li>
+                <li><%= result.url %></li>
+
               <% }); %>
             </ul>
           <% } else if (results && results.length === 0) { %>

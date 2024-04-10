@@ -19,7 +19,7 @@ router.get('/mongo', async (req, res) => {
 
   try {
     const results = await homeMDal.searchMongo(searchPhrase);
-    res.render('homeMongo.ejs', { results: results.rows, phrase: searchPhrase});
+    res.render('homeMongo.ejs', { results: results, phrase: searchPhrase});
   } catch (error) {
     console.error(error);
     res.render('homeMongo.ejs', {error: 'Error performing mongo search' });
@@ -28,10 +28,13 @@ router.get('/mongo', async (req, res) => {
 
 
 router.get('/postgres', async (req, res) => {
+  const searchPhrase = req.query.phrase;
+  if(!searchPhrase) {
+    return res.render('homePostgres.ejs', { results: [], phrase: ''});
+  }
   try {
-    const searchPhrase = req.query.phrase;
     const results = await homePDal.searchPostgres(searchPhrase);
-    res.render('homePostgres.ejs', { results: results.rows, phrase: searchPhrase});
+    res.render('homePostgres.ejs', { results: results, phrase: searchPhrase});
   } catch (error) {
     console.error(error);
     res.render('home', {error: 'Error performing postgres search' });

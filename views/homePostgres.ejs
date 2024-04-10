@@ -9,22 +9,19 @@
             </label>
           </form>
         </div>
-        <!-- <h1>Search Results for "%= searchPhrase %>"</h1>
-
-          <% if (error) { %>
-              <p><%= error %></p>
-          <% } else if (results.length > 0) { %>
-              <ul>
-                  <% results.forEach(function(pets) { %>
-                      <li><%= pets.pet_name %> - <%= pet_type.name %></li>
-                  <% }); %>
-                  <% results.forEach(function(owner) { %>
-                    <li><%= owner.name %> - <%= owner.owner_id %> - <%= pets.pet_name %></li> 
-                <% }); %>
-              </ul>
+        <div>
+          <h2>Search Results:</h2>
+          <% if (results && results.length > 0) { %>
+            <ul>
+              <% results.forEach(function(pets) { %>
+                <li><%= pets.pet_name %> </li>
+              <% }); %>
+            </ul>
+          <% } else if (phrase) { %>
+            <p>No results found for "<%= phrase %>".</p>
           <% } else { %>
-              <p>No results found.</p>
-          <% } %> -->
-        
+            <p>Enter a search term to find pets or owners.</p>
+          <% } %>
+        </div>
     </body>
 </html>
