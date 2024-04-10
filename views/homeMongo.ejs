@@ -1,0 +1,30 @@
+<html lang="en">
+
+    <body>
+        <div class=>
+          <form action="/home/mongo/" method="GET">
+            <label>Search for cat or dog facts and pictures:
+              <input type="text" name="phrase" placeholder="MongoDB search">
+              <button type="submit">MongoDB Search</button>
+            </label>
+      </form>
+        </div>
+
+        <div>
+          <h2>Search Results:</h2>
+          <% if (results && results.length > 0) { %>
+            <ul>
+              <% results.forEach(function(result) { %>
+                <li><%= result.fact %></li>
+                <li><%= result.url %></li>
+
+              <% }); %>
+            </ul>
+          <% } else if (results && results.length === 0) { %>
+            <p>No results found for "<%= phrase %>".</p>
+          <% } else if (phrase) { %>
+            <p>Enter a search term to find cat or dog facts and pictures.</p>
+          <% } %>
+        </div>
+    </body>
+</html>

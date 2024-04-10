@@ -31,6 +31,8 @@ app.use('/users', userRouter);
 const loginRouter = require('./routes/login')
 app.use('/login', loginRouter);
 
+const homeRouter = require('./routes/home')
+app.use('/home', homeRouter);
 
 
 
