@@ -1,0 +1,86 @@
+@import url('https://fonts.googleapis.com/css2?family=Yeseva+One&display=swap');
+
+@import url('https://fonts.googleapis.com/css2?family=Rubik+Glitch+Pop&family=Yeseva+One&display=swap');
+
+@import url('https://fonts.googleapis.com/css2?family=Averia+Serif+Libre:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&family=Rubik+Glitch+Pop&family=Yeseva+One&display=swap');
+
+body {
+  font-family: "Averia Serif Libre";
+  background-image: url("background.jpg");
+  background-repeat: no repeat;
+  background-size: cover;
+  /* display: flex; */
+  align-items: center;
+
+}
+
+nav {
+  width: 100%;
+  text-align:center;
+  font-size: xx-large;
+  background: rgb(75, 71, 71, 0.5);
+  /* position:fixed; */
+}
+
+
+a:link {
+  color:rgb(185, 197, 108);
+  text-decoration: none;
+}
+a:visited {
+  color:rgb(156, 166, 91);
+  text-decoration: none;
+}
+
+a:hover {
+  color: whitesmoke;
+}
+
+header {
+  font-size: 8em;
+  background: rgba(37, 30, 30, 0.8);
+  position: fixed;
+  width: 100%;
+  color: rgb(156, 166, 91);
+}
+
+.class1 {
+  font-size: 5em;
+  color:rgb(150, 149, 146);
+  margin: auto;
+}
+
+.class2 {
+  width: 80%;
+  text-align: center;
+  font-size: 2em;
+  color: black;
+  background: rgba(131, 131, 118, 0.7);
+  border: .5em solid rgb(46, 44, 41);
+  border-radius: 5pt;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 3em;
+  padding: 4%;
+}
+
+.class3 {
+  width: 80%;
+  text-align: center;
+  font-size: 1em;
+  color: rgb(185, 197, 108);
+  background: rgba(131, 131, 118, 0.7);
+  border: .5em solid rgb(46, 44, 41);
+  border-radius: 5pt;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 1em;
+}
+
+button {
+  width: 10%;
+  padding: 1em;
+  margin-top: .7em;
+  border-left:black;
+  border-radius: 5px;
+}
