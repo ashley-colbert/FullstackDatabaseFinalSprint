@@ -3,6 +3,7 @@ const methodOverride = require('method-override');
 const app = express();
 const PORT = 3000;
 const session = require('express-session');
+const {v4: genuuid } = require('uuid');
 
 //this ensure all the npm packages added above can be used throughout the application.
 global.DEBUG = true;
@@ -16,12 +17,17 @@ app.get('/', (req, res) => {
 });
 
 //to use sessions throughout the app
-app.use(session({
-  secret: 'myKey123',
-  resave: false,
-  saveUninitialized: true,
-  cookie: { secure: true }
-}));
+
+app.use(session(
+  { name:'SessionCookie',
+    genid: function(req) {
+        console.log('session id created');
+      return genuuid();},
+    secret: 'myKey123',
+    resave: false,
+    saveUninitialized: false,
+    cookie: { secure: false, maxAge:60000 }
+  }));
 
 //sets the UI routers to be used in the web browser
 const petsRouter = require('./routes/pets')
@@ -41,6 +47,9 @@ app.use('/login', loginRouter);
 
 const homeRouter = require('./routes/home')
 app.use('/home', homeRouter);
+
+const logoutRouter = require('./routes/logout')
+app.use('/logout', logoutRouter);
 
 
 

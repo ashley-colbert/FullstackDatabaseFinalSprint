@@ -1,8 +1,7 @@
 <html lang="en">
-  <%- include('./header.ejs') %>
 
     <body>
-        
+        <div class="class3">
             <form action="/owner" method="POST">
                 <b>Owners: </b><br>
             <% if (theOwners.length > 0) { %>
@@ -26,6 +25,6 @@
             <br>
             <button>POST</button>
         </form>
-        
+      </div>
     </body>
 </html>

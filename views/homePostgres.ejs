@@ -3,15 +3,15 @@
     <body>
       <%- include('./navBar.ejs') %>
 
-        <div class=>
+        <div class="class3">
           <form action="/home/postgres/" method="GET">
             <label>Search for pets or owners:
-              <input type="text" name="phrase" placeholder="PostgreSQL search">
+              <input type="text" name="phrase" placeholder="PostgreSQL search"><br>
               <button type="submit">PostgreSQL Search</button>
             </label>
           </form>
         </div>
-        <div>
+        <div class="class3">
           <h2>Search Results:</h2>
           <% if (results && results.length > 0) { %>
             <ul>
