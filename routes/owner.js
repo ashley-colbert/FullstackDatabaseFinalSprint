@@ -50,7 +50,7 @@ router.post('/', async (req, res) => {
     if(DEBUG) console.log("owner.POST");
     try {
         await ownerDal.addOwner(req.body.name, req.body.age, req.body.email);
-        res.redirect('/pets/');
+        res.redirect('/home/');
     } catch {
         res.render('503');
     }

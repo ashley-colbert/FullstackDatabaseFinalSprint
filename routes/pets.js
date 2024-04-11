@@ -50,7 +50,7 @@ router.post('/', async (req, res) => {
     if(DEBUG) console.log("pets.POST");
     try {
         await petsDal.addPet(req.body.pet_name, req.body.age, req.body.type_id, req.body.owner_id);
-        res.redirect('/pets/');
+        res.redirect('/home/');
     } catch {
         res.render('503');
     }

@@ -4,6 +4,7 @@
       <%- include('./navBar.ejs') %>
 
         <div class="class3">
+          Search PostgreSQL Database: <br>
           <form action="/home/postgres/" method="GET">
             <label>Search for pets or owners:
               <input type="text" name="phrase" placeholder="PostgreSQL search"><br>
@@ -16,7 +17,7 @@
           <% if (results && results.length > 0) { %>
             <ul>
               <% results.forEach(function(result) { %>
-                <li>Owner name: <%= result.owner_name %>, Owner ID: <%= result.owner_id %>, Pet name: <%= result.pet_name %>, Owner name: <%= result.name %>  </li>
+                <li>Owner name: <%= result.owner_name %>, Owner ID: <%= result.owner_id %>, Pet name: <%= result.pet_name %>, Pet type: <%= result.pet_type_name %>  </li>
               <% }); %>
             </ul>
           <% } else if (phrase) { %>
