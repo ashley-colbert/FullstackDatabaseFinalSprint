@@ -1,22 +1,6 @@
 const dal = require("./pgDatabase");
 
-// async function searchPostgres(phrase) {
-//   let dalConnection = null;
-//   try {
-//     dalConnection = await dal.connect();
-//     const query = 'SELECT * FROM pets WHERE pet_name ILIKE $1';
-//     const values = [`%${phrase}%`];
-//     const result = await dalConnection.query(query, values);
-//     return result.rows;
-//   } catch (error) {
-//     console.error('Error executing searchPostgres:', error);
-//     throw error;
-//   } finally {
-//     if (dalConnection) {
-//       dalConnection.release();
-//     }
-//   }
-// }
+//function to search the pets database using a keyword
 
 var searchPostgres = function(phrase) {
   if(DEBUG) console.log("searchPostgres function called with phrase:", phrase);

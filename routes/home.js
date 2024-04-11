@@ -63,12 +63,4 @@ router.post('/postgres', async (req, res) => {
 });
 
 
-router.get('/test-session', (req, res) => {
-  if (req.session.username) {
-    res.send(`Session is working! Username: ${req.session.username}`);
-  } else {
-    res.send('Session is not working.');
-  }
-});
-
 module.exports = router
