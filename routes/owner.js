@@ -3,6 +3,15 @@ const router = express.Router();
 const ownerDal = require('../services/owner.dal')
 
 // https://localhost:3000/owners/
+
+router.get('/', async (req, res) => {
+  if (req.session.username) {
+      res.render('owner', {username: req.session.username });
+  } else {
+      res.redirect('/login');
+  }
+});
+
 router.get('/', async (req, res) => {
     try {
         let theOwners = await ownerDal.getOwner();

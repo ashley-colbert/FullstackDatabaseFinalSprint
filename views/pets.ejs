@@ -2,28 +2,28 @@
 
     <body>
       <%- include('./navBar.ejs') %>
-        <div class="class3">
-            <form action="/pets" method="POST">
-            Add Pet:<br>
-            <label>Name:
-                <input type="text" id="pet_name" name="pet_name" value="<%= locals.pet_name %>" required>
-            </label>
-            <label>Age:
-                <input type="text" id="age" name="age" value="<%= locals.age %>" required>
-            </label>
-            <label>Pet Type:
-              <select id="type_id" name="type_id" required>
-                <option value="1">Cat</option>
-                <option value="2">Dog</option>
-              </label><br>
-            <p>Owner ID:</p>
-              <input type="text" id="owner_id" name="owner_id">
-            </label>
-            <br>
 
-            <button>POST</button>
-            </form>
-      </div>
+      <div class="class3">
+        <form action="/pets" method="POST">
+        Add Owner:<br>
+        <label>Pet Name:
+            <input type="text" id="pet_name" name="pet_name" value="<%= locals.pet_name %>" required>
+        </label>
+        <label>Age:
+            <input type="text" id="age" name="age" value="<%= locals.age %>" required>
+        </label>
+        <label>Pet Type: </label>
+          <select id="type_id" name="type_id" required>
+            <option value="1">Cat</option>
+            <option value="2">Dog</option>
+          </select>
+          <label>Owner ID
+            <input type="text" id="owner_id" name="owner_id" value="<%= locals.owner_id %>">
+          </label>
+        <br>
+        <button>POST</button>
+      </form>
+  </div>
         
     </body>
 </html>
