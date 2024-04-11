@@ -52,11 +52,6 @@ const logoutRouter = require('./routes/logout')
 app.use('/logout', logoutRouter);
 
 
-
-// sets all API routers to be used in the restfulAPI
-// const apiRouter = require('./routes/api')
-// app.use('/api', apiRouter);
-
 app.use((req, res) => {
     res.status(404).render('404');
 });
@@ -65,3 +60,5 @@ app.use((req, res) => {
 app.listen(PORT, () => {
     console.log(`Awesome pets directory, running on ${PORT}.`)
 });
+
+module.exports = app;
