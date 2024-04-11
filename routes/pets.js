@@ -3,6 +3,15 @@ const router = express.Router();
 const petsDal = require('../services/pets.dal')
 
 // https://localhost:3000/pets/
+
+router.get('/', async (req, res) => {
+  if (req.session.username) {
+      res.render('pets', {username: req.session.username });
+  } else {
+      res.redirect('/login');
+  }
+});
+
 router.get('/', async (req, res) => {
     try {
         let thePets = await petsDal.getPets();

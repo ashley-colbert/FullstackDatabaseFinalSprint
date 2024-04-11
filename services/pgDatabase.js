@@ -1,11 +1,11 @@
 //all information needed to connect to the database that is stored on my local computer
 const Pool = require('pg').Pool
 const pool = new Pool({
-  user: 'postgres',
-  host: 'localhost',
-  database: 'pets',
-  password: 'Tanner2087',
-  port: 5434,
+  user: process.env.DB_USER,
+  host: process.env.DB_HOST,
+  database: process.env.DB_NAME,
+  password: process.env.DB_PASSWORD,
+  port: process.env.DB_PORT,
 });
 
 //function to connect to the database

@@ -1,3 +1,5 @@
+require('dotenv').config();
+
 const express = require('express');
 const methodOverride = require('method-override');
 const app = express();
@@ -26,7 +28,7 @@ app.use(session(
     secret: 'myKey123',
     resave: false,
     saveUninitialized: false,
-    cookie: { secure: false, maxAge:60000 }
+    cookie: { secure: false, maxAge:1200000 }
   }));
 
 //sets the UI routers to be used in the web browser

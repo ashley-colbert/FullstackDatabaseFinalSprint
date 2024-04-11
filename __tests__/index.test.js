@@ -5,6 +5,6 @@ describe('GET /', () => {
   it('routes to the index page', async () => {
     const response = await request(app).get('/');
     expect(response.statusCode).toBe(200);
-    expect(response.text).toMatch(/The Amazing Pet Directory/);
+    expect(response.text).toMatch(/The Awesome Pet Directory/);
   });
 });
