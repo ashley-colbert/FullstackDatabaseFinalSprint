@@ -3,6 +3,7 @@ const router = express.Router();
 const loginsDal = require('../services/login.dal')
 const usersDal = require('../services/user.dal')
 const bcrypt = require('bcrypt');
+const session = require('express-session');
 
 
 function getCurrentDate() {
@@ -45,38 +46,6 @@ router.get('/:id/edit', async (req, res) => {
   res.render('loginPatch.ejs', {username: req.query.username, theId: req.params.user_id});
 });
 
-// router.post('/', async (req, res) => {
-//   if(DEBUG) console.log("login.POST");
-//   try {
-//       await loginsDal.addLogin(req.body.username, req.body.date);
-//       res.redirect('/login/');
-//   } catch {
-//       res.render('503');
-//   }
-// });
-
-// router.post('/login', async (req, res) => {
-//   try {
-//       const { username, password } = req.body;
-//       const user = await usersDal.getUserByUsername(username);
-
-//       if (user) {
-//           const match = await bcrypt.compare(password, user.hashedPassword);
-//           if (match) {
-
-//               res.redirect('/index');
-//           } else {
-//               res.render('login', { message: 'Invalid username or password.' });
-//           }
-//       } else {
-//           res.render('login', { message: 'Invalid username or password.' });
-//       }
-//   } catch (error) {
-//       console.error(error);
-//       res.render('503');
-//   }
-// });
-
 router.post('/', async (req, res) => {
   try {
       const { username, password } = req.body;
@@ -85,21 +54,27 @@ router.post('/', async (req, res) => {
       if (user) {
           const match = await bcrypt.compare(password, user[0].password);
           if (match) {
-              const currentDate = new Date().toISOString().split('T')[0];
-              await loginsDal.addLogin(username, currentDate);
-              console.log("pets")
-              res.redirect('/home');
+              req.session.username = username;
+              req.session.save((err) => {
+                if(err) {
+                  console.error(err);
+                  res.render('login', { message: 'Session failed to save' })
+                } else {
+                  const currentDate = new Date().toISOString().split('T')[0];
+                  loginsDal.addLogin(username, currentDate);
+                  console.log("pets")
+                  res.redirect('/home/');
+                }
+              });
           } else {
-              console.log("match")
-              res.render('login', {message: 'Invalid username or password.'} );
+              res.render('login', {message: 'Invalid username or password.', currentDate: ''});
           }
       } else {
-          console.log("no match")
-          res.render('login', {message: 'Invalid username or password.'} );
+          res.render('login', {message: 'Invalid username or password.', currentDate: ''} );
       }
   } catch (error) {
       console.error(error);
-      res.render('503');
+      res.render('503', {currentDate: ''});
   }
 });
 
@@ -112,6 +87,7 @@ router.patch('/:id', async (req, res) => {
       res.render('503');
   }
 });
+
 router.delete('/:id', async (req, res) => {
   if(DEBUG) console.log('login.DELETE: ' + req.params.user_id);
   try {

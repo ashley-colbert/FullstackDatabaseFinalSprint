@@ -3,22 +3,22 @@
     <body>
       <%- include('./navBar.ejs') %>
 
-        <div class=>
+        <div class="class3">
           <form action="/home/mongo/" method="GET">
+            Search MongoDG: <br>
             <label>Search for cat or dog facts and pictures:
-              <input type="text" name="phrase" placeholder="MongoDB search">
+              <input type="text" name="phrase" placeholder="MongoDB search"> <br>
               <button type="submit">MongoDB Search</button>
             </label>
       </form>
         </div>
 
-        <div>
+        <div class="class3">
           <h2>Search Results:</h2>
           <% if (results && results.length > 0) { %>
             <ul>
               <% results.forEach(function(result) { %>
-                <li><%= result.fact %></li>
-                <li><%= result.url %></li>
+                <li><%= result.fact %> <%= result.url %></li>
 
               <% }); %>
             </ul>

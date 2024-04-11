@@ -2,9 +2,9 @@
 
     <body>
       <%- include('./navBar.ejs') %>
+        <div class="class3">
             <form action="/pets" method="POST">
-
-            <br><label>Add Pet:</label><br>
+            Add Pet:<br>
             <label>Name:
                 <input type="text" id="pet_name" name="pet_name" value="<%= locals.pet_name %>" required>
             </label>
@@ -15,11 +15,15 @@
               <select id="type_id" name="type_id" required>
                 <option value="1">Cat</option>
                 <option value="2">Dog</option>
-          </label>
-          <input type="text" id="owner_id" name="owner_id">
+              </label><br>
+            <p>Owner ID:</p>
+              <input type="text" id="owner_id" name="owner_id">
+            </label>
             <br>
+
             <button>POST</button>
-        </form>
+            </form>
+      </div>
         
     </body>
 </html>
