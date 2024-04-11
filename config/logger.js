@@ -27,8 +27,6 @@ const logSearch = (searchPhrase, username) => {
   });
 };
 
-logger.info('Winston is configured correctly.');
-
 module.exports = {
   logger,
   logSearch

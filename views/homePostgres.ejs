@@ -15,8 +15,8 @@
           <h2>Search Results:</h2>
           <% if (results && results.length > 0) { %>
             <ul>
-              <% results.forEach(function(pets) { %>
-                <li><%= pets.pet_name %> </li>
+              <% results.forEach(function(result) { %>
+                <li>Owner name: <%= result.owner_name %>, Owner ID: <%= result.owner_id %>, Pet name: <%= result.pet_name %>, Owner name: <%= result.name %>  </li>
               <% }); %>
             </ul>
           <% } else if (phrase) { %>
